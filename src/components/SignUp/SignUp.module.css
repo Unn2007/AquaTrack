@@ -1,0 +1,235 @@
+.containerUp {
+  background-color: #f0eff4;
+  border-radius: 30px;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.formUp {
+  width: 100%;
+  padding: 126px 0 170px 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.formUp div {
+  margin-bottom: 16px;
+}
+
+.titleUp {
+  color: #323f47;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  margin-bottom: 32px;
+  /*  text-shadow: 2px 2px 4px rgba(12, 12, 12, 0.5); */
+}
+
+.labelUp {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 129%;
+  color: #2f2f2f;
+  display: block;
+  margin-bottom: 8px;
+  /*   text-shadow: 2px 2px 4px rgba(12, 12, 12, 0.4); */
+}
+
+.inputWrapper {
+  position: relative;
+  align-items: center;
+}
+
+.inputUp {
+  border: 1px solid rgba(248, 246, 246, 0.863);
+  border-radius: 15px;
+  padding-right: 40px;
+  padding-left: 16px;
+  width: 100%;
+  max-width: 100%;
+  background-color: #fff;
+  height: 50px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+  color: rgba(10, 10, 10, 0.911);
+  box-sizing: border-box;
+  box-shadow: 0 10px 12px rgba(28, 61, 15, 0.2);
+  transition: all 0.3s ease;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.icon {
+  pointer-events: none;
+}
+
+.inputUp:hover {
+  border-color: #69e974;
+}
+
+.inputUp:focus {
+  border-color: #87d28d;
+}
+
+.inputUp:active {
+  border-color: #69e974;
+}
+
+.errorText {
+  color: #ef5050;
+  font-weight: 400;
+  font-size: 14px;
+  /* position: absolute; */
+}
+
+.btnUp {
+  border-radius: 30px;
+  border: none;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: #9be1a0;
+  margin: 16px 0 16px 0;
+  cursor: pointer;
+  box-shadow: 0 10px 12px rgba(28, 61, 15, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btnUp:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: #87d28d;
+}
+
+.textUp {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(47, 47, 47, 0.5);
+  text-align: center;
+  /*   text-shadow: 2px 2px 4px rgba(12, 12, 12, 0.4); */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.linkUp {
+  font-weight: 700;
+  color: #2f2f2f;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.linkUp:hover {
+  color: #519256;
+}
+
+.iconButton {
+  all: unset;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputError {
+  border: 0.1px solid rgb(243, 188, 188);
+  background-color: #ffe6e6;
+}
+
+.inputError:focus {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}
+.inputError:hover {
+  border: 1px solid red;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  min-width: 300px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 3s ease forwards;
+}
+
+.notification.error {
+  background-color: #f44336;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .containerUp {
+    width: 704px;
+    padding: 32px;
+  }
+
+  .formUp {
+    width: 100%;
+    padding: 171px 102px 227px 102px;
+  }
+
+  .titleUp {
+    font-size: 36px;
+    line-height: 106%;
+  }
+  .labelUp {
+    font-size: 16px;
+    line-height: 150%;
+  }
+  .inputUp {
+    width: 100%;
+    height: 56px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  .btnUp {
+    width: 436px;
+    height: 60px;
+    font-size: 16px;
+  }
+  .textUp {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .containerUp {
+    width: 672px;
+    height: 736px;
+  }
+  .formUp {
+    width: 100%;
+    padding: 74px 86px 100px 86px;
+  }
+}

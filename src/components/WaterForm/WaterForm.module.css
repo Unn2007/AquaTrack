@@ -1,0 +1,143 @@
+.waterForm {
+  margin-top: 24px;
+  width: 303px;
+}
+
+@media only screen and (min-width: 768px) {
+  .waterForm {
+    width: 438px;
+  }
+}
+
+.valuePickerContainer {
+  margin-top: 20px;
+}
+
+.adjustmentContainer {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.amountDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #323f47;
+  color: white;
+  border-radius: 30px;
+  padding: 0 20px;
+}
+
+.adjustmentButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1.5px solid #323f47;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+}
+
+@media only screen and (min-width: 768px) {
+  .adjustmentButton {
+    height: 43px;
+    width: 43px;
+  }
+}
+
+.icon {
+  stroke: #323f47;
+}
+
+.inputField {
+  border: 1px solid rgba(47, 47, 47, 0.2);
+  border-radius: 15px;
+  padding: 0 16px;
+  width: 303px;
+  height: 46px;
+  outline: none;
+  margin-top: 8px;
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .inputField {
+    height: 56px;
+  }
+}
+
+.inputField:active {
+  border: 1px solid rgba(47, 47, 47, 0.4);
+}
+
+.timeBlockLabel {
+  margin-top: 16px;
+}
+
+.amountBlockLabel {
+  margin-top: 24px;
+}
+
+.saveBtn {
+  border-radius: 30px;
+  border: none;
+  height: 46px;
+  padding: 0 40px;
+  background: #9be1a0;
+  margin-top: 24px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 768px) {
+  .saveBtn {
+    height: 60px;
+    padding: 0 50px;
+    font-size: 16px;
+  }
+}
+
+.waterForm > p,
+.amountBlockLabel {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+}
+
+@media only screen and (min-width: 768px) {
+  .waterForm > p,
+  .amountBlockLabel {
+    font-size: 18px;
+  }
+}
+
+.inputError {
+  border: 1px solid #ef5050;
+  color: #ef5050;
+}
+
+.errorMessage {
+  display: block;
+  height: 18px;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+  color: #ef5050;
+  margin-top: 10px;
+}
+
+/* hide input arrows Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* hide input arrows Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}

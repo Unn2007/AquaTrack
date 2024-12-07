@@ -1,0 +1,52 @@
+.btn {
+  border-radius: 30px;
+  padding: 6px 12px;
+  width: 137px;
+  background: #323f47;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s ease;
+  margin-bottom: 40px;
+}
+.name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.28571;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #fff;
+}
+.icon {
+  stroke: #fff;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+.avatar {
+  width: 38px;
+  height: 38px;
+}
+.rotated {
+  transform: rotate(180deg);
+}
+@media only screen and (min-width: 768px) {
+  .btn {
+    position: relative;
+    top: -9px;
+    width: 157px;
+  }
+  .name {
+    font-size: 16px;
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+  }
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}

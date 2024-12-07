@@ -1,0 +1,48 @@
+/* .login {
+  width: 343px;
+  margin: auto;
+  background-color: #f0eff4;
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 765px) {
+  .login {
+    margin: 32px;
+    width: 704px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .login {
+    width: 672px;
+  }
+} */
+
+/* .advantages {
+  display: none;
+
+}
+
+@media only screen and (min-width: 1024px) {
+  .advantages {
+    display: block;
+
+  }
+} */
+
+.advantages {
+  display: none;
+}
+
+@media only screen and (min-width: 1440px) {
+  .advantages {
+    display: block;
+    border-radius: 30px;
+  }
+
+  .login {
+    display: flex;
+    gap: 32px;
+  }
+}

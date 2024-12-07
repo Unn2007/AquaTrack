@@ -1,0 +1,15 @@
+.hidden {
+  display: none;
+}
+
+@media only screen and (min-width: 1440px) {
+  .hidden {
+    display: block;
+    border-radius: 30px;
+  }
+
+  .signUp {
+    display: flex;
+    gap: 32px;
+  }
+}
