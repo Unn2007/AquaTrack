@@ -1,37 +1,57 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Icon } from '../Icon/Icon';
 import style from './WaterForm.module.css';
-import { useDispatch } from 'react-redux';
-import { createWaterEntry } from '../../redux/water/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createWaterEntry,
+  patchWaterEntry,
+} from '../../redux/water/operations';
+import { selectIsLoading } from '../../redux/water/selectors';
+import { useTranslation } from 'react-i18next';
 
-const WaterForm = ({ entry, onAddWater }) => {
-  const [initialDate, setInitialDate] = useState();
+const WaterForm = ({ entry, toggleModal }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const { t } = useTranslation();
 
-  const validationSchema = Yup.object().shape({
-    date: Yup.string()
-      .required('Time is required')
-      .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Time must be in hh:mm format'),
-    volume: Yup.number()
-      .required('Value is required')
-      .typeError('Value must be a number')
-      .integer('Value must be an integer')
-      .min(50, 'Minimum value is 50')
-      .max(3000, 'Maximum value is 3000'),
-  });
+  const extractDate = (timestamp) => {
+    if (timestamp) return timestamp.split(' ')[0];
 
-  const extractTime = (timestamp) => {
-    const date = timestamp ? new Date(timestamp) : new Date();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
+    const date = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
   };
 
+  const extractTime = (timestamp) => {
+    if (timestamp) return timestamp.split(' ')[1];
+
+    const date = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+
+    return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
+  const entryDate = extractDate(entry.date);
+  const entryTime = extractTime(entry.date);
+
+  const validationSchema = Yup.object().shape({
+    time: Yup.string()
+      .required(t('validationForm.drinkingTimeRequired'))
+      .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, t('validationForm.drinkingTimeRequired')),
+    volume: Yup.number()
+      .required(t('validationForm.usedWaterRequired'))
+      .typeError(t('validationForm.usedWaterTypeError'))
+      .integer(t('validationForm.usedWaterInteger'))
+      .min(50, t('validationForm.usedWaterPositive'))
+      .max(3000, t('validationForm.usedWaterMax')),
+  });
+
   const defaultValues = {
-    date: extractTime(entry.date),
+    time: entryTime,
     volume: entry.volume || '50',
   };
 
@@ -47,22 +67,24 @@ const WaterForm = ({ entry, onAddWater }) => {
   const currentAmount = watch('volume');
 
   const onSubmit = (formData) => {
-    const hours = formData.date.split(':')[0];
-    const minutes = formData.date.split(':')[1];
-    const newDate = new Date(
-      initialDate.setHours(hours, minutes)
-    ).toISOString();
-
-    console.log('Submitting water entry:', {
-      volume: Number(formData.volume),
-      date: newDate,
-    });
-    dispatch(
-      createWaterEntry({
-        volume: Number(formData.volume),
-        date: newDate,
-      })
-    );
+    if (entry._id) {
+      dispatch(
+        patchWaterEntry({
+          id: entry._id,
+          updatedData: {
+            volume: Number(formData.volume),
+            date: `${entryDate} ${formData.time}`,
+          },
+        })
+      ).then(toggleModal);
+    } else {
+      dispatch(
+        createWaterEntry({
+          volume: Number(formData.volume),
+          date: `${entryDate} ${formData.time}`,
+        })
+      ).then(toggleModal);
+    }
   };
 
   const litersFormat = (value) =>
@@ -86,15 +108,11 @@ const WaterForm = ({ entry, onAddWater }) => {
     }
   };
 
-  useEffect(() => {
-    setInitialDate(entry.date ? new Date(entry.date) : new Date());
-  }, [entry]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.waterForm}>
-      <p>{entry.id ? 'Correct entered data:' : 'Choose a value:'}</p>
+      <p>{entry._id ? t('waterForm.titleEdit') : t('waterForm.titleAdd')}</p>
       <div className={style.valuePickerContainer}>
-        <p>Amount of water:</p>
+        <p>{t('waterForm.secondTitle')}:</p>
         <div className={style.adjustmentContainer}>
           <button
             className={style.adjustmentButton}
@@ -115,14 +133,14 @@ const WaterForm = ({ entry, onAddWater }) => {
           </button>
         </div>
         <label>
-          <p className={style.timeBlockLabel}>Recording time:</p>
+          <p className={style.timeBlockLabel}>{t('waterForm.time')}:</p>
           <Controller
-            name="date"
+            name="time"
             control={control}
             render={({ field }) => (
               <input
                 className={`${style.inputField} ${
-                  errors.date ? style.inputError : ''
+                  errors.time ? style.inputError : ''
                 }`}
                 type="text"
                 placeholder="hh:mm"
@@ -130,15 +148,13 @@ const WaterForm = ({ entry, onAddWater }) => {
               />
             )}
           />
-          {errors.date && (
-            <span className={style.errorMessage}>{errors.date.message}</span>
+          {errors.time && (
+            <span className={style.errorMessage}>{errors.time.message}</span>
           )}
         </label>
       </div>
       <label>
-        <p className={style.amountBlockLabel}>
-          Enter the value of the water used:
-        </p>
+        <p className={style.amountBlockLabel}>{t('waterForm.waterUsed')}:</p>
         <Controller
           name="volume"
           control={control}
@@ -148,7 +164,7 @@ const WaterForm = ({ entry, onAddWater }) => {
                 errors.volume ? style.inputError : ''
               }`}
               type="number"
-              placeholder="Enter the value of the water used:"
+              placeholder={t('waterForm.waterUsed')}
               {...field}
             />
           )}
@@ -158,8 +174,8 @@ const WaterForm = ({ entry, onAddWater }) => {
         )}
       </label>
       <br />
-      <button className={style.saveBtn} type="submit">
-        Save
+      <button className={style.saveBtn} disabled={isLoading} type="submit">
+        {t('waterForm.button')}
       </button>
     </form>
   );

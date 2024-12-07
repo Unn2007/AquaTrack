@@ -23,7 +23,6 @@ import {
 
 const UserBar = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectAuthUser);
 
@@ -51,7 +50,11 @@ const UserBar = ({}) => {
         className={css.btn}
       >
         <h4 className={css.name}>{displayedName}</h4>
-        <RxAvatar className={css.avatar} />
+        {user?.avatar ? (
+          <img src={user.avatar} alt="User avatar" className={css.avatar} />
+        ) : (
+          <RxAvatar className={css.avatar} />
+        )}
         <Icon
           id="icon-menu"
           className={clsx(css.icon, {
@@ -66,7 +69,8 @@ const UserBar = ({}) => {
           style={floatingStyles}
           {...getFloatingProps()}
         >
-          <UserBarPopover />
+          <UserBarPopover closePopover={() => setIsOpen(false)} />
+          {/* <UserBarPopover closePopover={() => setIsOpen(false)} /> */}
         </div>
       )}
     </>
